@@ -83,6 +83,14 @@
         <div>Home</div>
         <div>Services</div>
         <div>Contact</div>
+        @auth
+            <div>
+                <form action="{{ route('logout') }}" method="POST" style="margin: 0; padding: 0;">
+                    @csrf
+                    <button type="submit" style="background: none; border: none; color: white; font-family: inherit; font-size: inherit; cursor: pointer; padding: 0;">Logout</button>
+                </form>
+            </div>
+        @endauth
     </div>
 </div>
 

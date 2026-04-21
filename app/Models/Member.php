@@ -17,5 +17,7 @@ class Member extends Model
         'phone',
         'membership_type',
         'join_date',
+        'status',
+        'expiry_date',
     ];
 }

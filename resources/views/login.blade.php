@@ -100,7 +100,7 @@
 
         <div class="form-group">
             <label>Login</label>
-            <input type="text" name="login" required>
+            <input type="text" name="email" required>
         </div>
 
         <div class="form-group">
@@ -113,7 +113,7 @@
     </form>
 
     <div class="switch">
-        No account? <a href="register.html">Register</a>
+        No account? <a href="{{ route('register') }}">Register</a>
     </div>
 
 </div>
