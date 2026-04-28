@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 
 @if($auth === 'success')
-    <script>alert('Authorization passed successfully');</script>
+    <script>alert('{{ __('messages.authorization_success') }}');</script>
 @endif
 
 
 <head>
     <meta charset="UTF-8">
-    <title>Fitness Club</title>
+    <title>{{ __('messages.fitness_club') }}</title>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -73,21 +73,45 @@
             margin: 2px;
             padding: 5px;
         }
+
+        .language-switcher {
+            display: flex;
+            gap: 8px;
+        }
+
+        .language-switcher a {
+            color: white;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 5px;
+            padding: 2px 7px;
+            font-size: 13px;
+        }
+
+        .language-switcher a.active {
+            background: white;
+            color: #222;
+        }
     </style>
 </head>
 <body>
 
 <div class="navbar">
-    <div>Fitness Club</div>
+    <div>{{ __('messages.fitness_club') }}</div>
     <div class="nav-links">
-        <div>Home</div>
-        <div>Services</div>
-        <div>Contact</div>
+        <div>{{ __('messages.home') }}</div>
+        <div>{{ __('messages.services') }}</div>
+        <div>{{ __('messages.contact') }}</div>
+        <div class="language-switcher" aria-label="{{ __('messages.choose_language') }}">
+            <a href="{{ route('lang.switch', 'en') }}" class="{{ app()->getLocale() === 'en' ? 'active' : '' }}">EN</a>
+            <a href="{{ route('lang.switch', 'ru') }}" class="{{ app()->getLocale() === 'ru' ? 'active' : '' }}">RU</a>
+            <a href="{{ route('lang.switch', 'kz') }}" class="{{ app()->getLocale() === 'kz' ? 'active' : '' }}">KZ</a>
+        </div>
         @auth
             <div>
                 <form action="{{ route('logout') }}" method="POST" style="margin: 0; padding: 0;">
                     @csrf
-                    <button type="submit" style="background: none; border: none; color: white; font-family: inherit; font-size: inherit; cursor: pointer; padding: 0;">Logout</button>
+                    <button type="submit" style="background: none; border: none; color: white; font-family: inherit; font-size: inherit; cursor: pointer; padding: 0;">{{ __('messages.logout') }}</button>
                 </form>
             </div>
         @endauth
@@ -95,8 +119,8 @@
 </div>
 
 <div class="hero">
-    <h1>Welcome to Fitness Club</h1>
-    <p>Track Our Progress</p>
+    <h1>{{ __('messages.welcome_to_fitness_club') }}</h1>
+    <p>{{ __('messages.track_progress') }}</p>
 </div>
 
 <div class="charts">
@@ -107,18 +131,18 @@
 </div>
 
 <div class="ad-box">
-    <h3>50% Discount!</h3>
-    <p>Join Today</p>
+    <h3>{{ __('messages.discount_50') }}</h3>
+    <p>{{ __('messages.join_today') }}</p>
 
-    <button id="hide">Hide</button>
-    <button id="show">Show</button>
-    <button id="fadeIn">FadeIn</button>
-    <button id="fadeOut">FadeOut</button>
-    <button id="fadeTo">FadeTo</button>
-    <button id="slideUp">SlideUp</button>
-    <button id="slideDown">SlideDown</button>
-    <button id="animate">Animate</button>
-    <button id="stop">Stop</button>
+    <button id="hide">{{ __('messages.hide') }}</button>
+    <button id="show">{{ __('messages.show') }}</button>
+    <button id="fadeIn">{{ __('messages.fade_in') }}</button>
+    <button id="fadeOut">{{ __('messages.fade_out') }}</button>
+    <button id="fadeTo">{{ __('messages.fade_to') }}</button>
+    <button id="slideUp">{{ __('messages.slide_up') }}</button>
+    <button id="slideDown">{{ __('messages.slide_down') }}</button>
+    <button id="animate">{{ __('messages.animate') }}</button>
+    <button id="stop">{{ __('messages.stop') }}</button>
 </div>
 
 <script>

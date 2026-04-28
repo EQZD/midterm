@@ -1,29 +1,29 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Edit Member')
+@section('title', __('messages.edit_member'))
 @section('role-label', Auth::user()->isSuperAdmin() ? 'Super Admin' : (Auth::user()->isManager() ? 'Manager' : 'Staff'))
 
 @section('nav')
-    <span class="nav-section">Overview</span>
+    <span class="nav-section">{{ __('messages.overview') }}</span>
     @if(Auth::user()->isSuperAdmin())
-        <a href="{{ route('admin.dashboard') }}" class="nav-link"><span class="nav-icon">◈</span> Dashboard</a>
+        <a href="{{ route('admin.dashboard') }}" class="nav-link"><span class="nav-icon">◈</span> {{ __('messages.dashboard') }}</a>
     @elseif(Auth::user()->isManager())
-        <a href="{{ route('manager.dashboard') }}" class="nav-link"><span class="nav-icon">◈</span> Dashboard</a>
+        <a href="{{ route('manager.dashboard') }}" class="nav-link"><span class="nav-icon">◈</span> {{ __('messages.dashboard') }}</a>
     @else
-        <a href="{{ route('staff.dashboard') }}" class="nav-link"><span class="nav-icon">◈</span> Dashboard</a>
+        <a href="{{ route('staff.dashboard') }}" class="nav-link"><span class="nav-icon">◈</span> {{ __('messages.dashboard') }}</a>
     @endif
 
-    <span class="nav-section">Members</span>
-    <a href="{{ route('members.index') }}" class="nav-link active"><span class="nav-icon">◉</span> All Members</a>
-    <a href="{{ route('members.create') }}" class="nav-link"><span class="nav-icon">+</span> Add Member</a>
+    <span class="nav-section">{{ __('messages.members') }}</span>
+    <a href="{{ route('members.index') }}" class="nav-link active"><span class="nav-icon">◉</span> {{ __('messages.all_members') }}</a>
+    <a href="{{ route('members.create') }}" class="nav-link"><span class="nav-icon">+</span> {{ __('messages.add_member') }}</a>
 
     @if(Auth::user()->isSuperAdmin())
-        <span class="nav-section">System</span>
-        <a href="{{ route('members.index') }}" class="nav-link"><span class="nav-icon">⚥</span> Users</a>
-        <a href="{{ route('admin.roles.index') }}" class="nav-link"><span class="nav-icon">◐</span> Roles</a>
+        <span class="nav-section">{{ __('messages.system') }}</span>
+        <a href="{{ route('members.index') }}" class="nav-link"><span class="nav-icon">⚥</span> {{ __('messages.users') }}</a>
+        <a href="{{ route('admin.roles.index') }}" class="nav-link"><span class="nav-icon">◐</span> {{ __('messages.roles') }}</a>
     @endif
     @if(Auth::user()->isSuperAdmin() || Auth::user()->isManager())
-        <a href="{{ route('manager.reports') }}" class="nav-link"><span class="nav-icon">▤</span> Reports</a>
+        <a href="{{ route('manager.reports') }}" class="nav-link"><span class="nav-icon">▤</span> {{ __('messages.reports') }}</a>
     @endif
 @endsection
 
@@ -38,8 +38,8 @@
 
 @section('content')
 <div class="page-header">
-    <h1>Edit Member</h1>
-    <p>Modify membership details for {{ $member->name }}.</p>
+    <h1>{{ __('messages.edit_member') }}</h1>
+    <p>{{ __('messages.modify_member_details', ['name' => $member->name]) }}</p>
 </div>
 
 <div class="card" style="padding: 30px;">
@@ -58,51 +58,51 @@
         @method('PUT')
         
         <div class="form-group">
-            <label class="form-label">Full Name</label>
+            <label class="form-label">{{ __('messages.full_name') }}</label>
             <input type="text" name="name" class="form-control" value="{{ old('name', $member->name) }}" required>
         </div>
 
         <div class="form-group">
-            <label class="form-label">Email Address</label>
+            <label class="form-label">{{ __('messages.email_address') }}</label>
             <input type="email" name="email" class="form-control" value="{{ old('email', $member->email) }}" required>
         </div>
 
         <div class="form-group">
-            <label class="form-label">Phone Number</label>
+            <label class="form-label">{{ __('messages.phone_number') }}</label>
             <input type="text" name="phone" class="form-control" value="{{ old('phone', $member->phone) }}">
         </div>
 
         <div class="form-group">
-            <label class="form-label">Membership Type</label>
+            <label class="form-label">{{ __('messages.membership_type') }}</label>
             <select name="membership_type" class="form-control" required>
-                <option value="Bronze" {{ old('membership_type', $member->membership_type) == 'Bronze' ? 'selected' : '' }}>Bronze</option>
-                <option value="Silver" {{ old('membership_type', $member->membership_type) == 'Silver' ? 'selected' : '' }}>Silver</option>
-                <option value="Gold" {{ old('membership_type', $member->membership_type) == 'Gold' ? 'selected' : '' }}>Gold</option>
+                <option value="Bronze" {{ old('membership_type', $member->membership_type) == 'Bronze' ? 'selected' : '' }}>{{ __('messages.bronze') }}</option>
+                <option value="Silver" {{ old('membership_type', $member->membership_type) == 'Silver' ? 'selected' : '' }}>{{ __('messages.silver') }}</option>
+                <option value="Gold" {{ old('membership_type', $member->membership_type) == 'Gold' ? 'selected' : '' }}>{{ __('messages.gold') }}</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label class="form-label">Status</label>
+            <label class="form-label">{{ __('messages.status') }}</label>
             <select name="status" class="form-control" required>
-                <option value="active" {{ old('status', $member->status) == 'active' ? 'selected' : '' }}>Active</option>
-                <option value="expired" {{ old('status', $member->status) == 'expired' ? 'selected' : '' }}>Expired</option>
-                <option value="cancelled" {{ old('status', $member->status) == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                <option value="active" {{ old('status', $member->status) == 'active' ? 'selected' : '' }}>{{ __('messages.active') }}</option>
+                <option value="expired" {{ old('status', $member->status) == 'expired' ? 'selected' : '' }}>{{ __('messages.expired') }}</option>
+                <option value="cancelled" {{ old('status', $member->status) == 'cancelled' ? 'selected' : '' }}>{{ __('messages.cancelled') }}</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label class="form-label">Join Date</label>
+            <label class="form-label">{{ __('messages.join_date') }}</label>
             <input type="date" name="join_date" class="form-control" value="{{ old('join_date', $member->join_date) }}" required>
         </div>
 
         <div class="form-group">
-            <label class="form-label">Expiry Date</label>
+            <label class="form-label">{{ __('messages.expiry_date') }}</label>
             <input type="date" name="expiry_date" class="form-control" value="{{ old('expiry_date', $member->expiry_date) }}">
         </div>
 
         <div style="margin-top:30px;">
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-            <a href="{{ route('members.index') }}" class="btn" style="margin-left:10px;">Cancel</a>
+            <button type="submit" class="btn btn-primary">{{ __('messages.save_changes') }}</button>
+            <a href="{{ route('members.index') }}" class="btn" style="margin-left:10px;">{{ __('messages.cancel') }}</a>
         </div>
     </form>
 </div>

@@ -1,62 +1,62 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Manager Dashboard')
+@section('title', __('messages.manager_dashboard'))
 @section('role-label', 'Manager')
 @php $badgeBg = '#e6f1fb'; $badgeColor = '#042c53'; @endphp
 
 @section('nav')
-    <span class="nav-section">Overview</span>
+    <span class="nav-section">{{ __('messages.overview') }}</span>
     <a href="{{ route('manager.dashboard') }}" class="nav-link active">
-        <span class="nav-icon">◈</span> Dashboard
+        <span class="nav-icon">◈</span> {{ __('messages.dashboard') }}
     </a>
 
-    <span class="nav-section">Members</span>
+    <span class="nav-section">{{ __('messages.members') }}</span>
     <a href="{{ route('members.index') }}" class="nav-link">
-        <span class="nav-icon">◉</span> All Members
+        <span class="nav-icon">◉</span> {{ __('messages.all_members') }}
     </a>
     <a href="{{ route('members.create') }}" class="nav-link">
-        <span class="nav-icon">+</span> Add Member
+        <span class="nav-icon">+</span> {{ __('messages.add_member') }}
     </a>
 
-    <span class="nav-section">Reports</span>
+    <span class="nav-section">{{ __('messages.reports') }}</span>
     <a href="{{ route('manager.reports') }}" class="nav-link">
-        <span class="nav-icon">▤</span> Reports
+        <span class="nav-icon">▤</span> {{ __('messages.reports') }}
     </a>
 @endsection
 
 @section('content')
 <div class="page-header">
-    <h1>Manager Dashboard</h1>
-    <p>Membership overview and analytics.</p>
+    <h1>{{ __('messages.manager_dashboard') }}</h1>
+    <p>{{ __('messages.membership_overview_analytics') }}</p>
 </div>
 
 <div class="stats-grid">
     <div class="stat-card">
-        <div class="label">Total Members</div>
+        <div class="label">{{ __('messages.total_members') }}</div>
         <div class="value">{{ $totalMembers ?? 0 }}</div>
-        <div class="delta">registered</div>
+        <div class="delta">{{ __('messages.registered') }}</div>
     </div>
     <div class="stat-card">
-        <div class="label">Gold</div>
+        <div class="label">{{ __('messages.gold') }}</div>
         <div class="value">{{ $goldCount ?? 0 }}</div>
-        <div class="delta">premium tier</div>
+        <div class="delta">{{ __('messages.premium_tier') }}</div>
     </div>
     <div class="stat-card">
-        <div class="label">Silver</div>
+        <div class="label">{{ __('messages.silver') }}</div>
         <div class="value">{{ $silverCount ?? 0 }}</div>
-        <div class="delta">standard tier</div>
+        <div class="delta">{{ __('messages.standard_tier') }}</div>
     </div>
     <div class="stat-card">
-        <div class="label">Bronze</div>
+        <div class="label">{{ __('messages.bronze') }}</div>
         <div class="value">{{ $bronzeCount ?? 0 }}</div>
-        <div class="delta">basic tier</div>
+        <div class="delta">{{ __('messages.basic_tier') }}</div>
     </div>
 </div>
 
 {{-- Membership type breakdown bar --}}
 @if(($totalMembers ?? 0) > 0)
 <div class="card" style="margin-bottom:24px">
-    <div class="card-header"><h2>Membership breakdown</h2></div>
+    <div class="card-header"><h2>{{ __('messages.membership_breakdown') }}</h2></div>
     <div class="card-body">
         <div style="display:flex;gap:4px;border-radius:6px;overflow:hidden;height:12px">
             @php
@@ -80,17 +80,17 @@
 
 <div class="card">
     <div class="card-header">
-        <h2>Members</h2>
-        <a href="{{ route('members.create') }}" class="btn btn-sm btn-primary">+ Add Member</a>
+        <h2>{{ __('messages.members') }}</h2>
+        <a href="{{ route('members.create') }}" class="btn btn-sm btn-primary">+ {{ __('messages.add_member') }}</a>
     </div>
     <table>
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Type</th>
-                <th>Phone</th>
-                <th>Joined</th>
+                <th>{{ __('messages.name') }}</th>
+                <th>{{ __('messages.email') }}</th>
+                <th>{{ __('messages.type') }}</th>
+                <th>{{ __('messages.phone') }}</th>
+                <th>{{ __('messages.joined') }}</th>
                 <th></th>
             </tr>
         </thead>
@@ -108,10 +108,10 @@
                 <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px">
                     {{ \Carbon\Carbon::parse($member->join_date)->format('d M Y') }}
                 </td>
-                <td><a href="{{ route('members.edit', $member) }}" class="btn btn-sm">Edit</a></td>
+                <td><a href="{{ route('members.edit', $member) }}" class="btn btn-sm">{{ __('messages.edit') }}</a></td>
             </tr>
         @empty
-            <tr><td colspan="6" style="color:var(--muted);text-align:center;padding:24px">No members found.</td></tr>
+            <tr><td colspan="6" style="color:var(--muted);text-align:center;padding:24px">{{ __('messages.no_members_found') }}</td></tr>
         @endforelse
         </tbody>
     </table>

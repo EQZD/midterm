@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>{{ __('messages.login') }}</title>
 
     <style>
         *{
@@ -81,6 +81,28 @@
             color:#ff512f;
             text-decoration:none;
         }
+
+        .language-switcher{
+            display:flex;
+            justify-content:center;
+            gap:8px;
+            margin-bottom:18px;
+            font-size:13px;
+        }
+
+        .language-switcher a{
+            color:#ff512f;
+            text-decoration:none;
+            border:1px solid #ffd2c8;
+            border-radius:5px;
+            padding:4px 8px;
+        }
+
+        .language-switcher a.active{
+            background:#ff512f;
+            color:white;
+            border-color:#ff512f;
+        }
     </style>
 
 </head>
@@ -89,7 +111,13 @@
 
 <div class="container">
 
-    <h2>Login</h2>
+    <div class="language-switcher" aria-label="{{ __('messages.choose_language') }}">
+        <a href="{{ route('lang.switch', 'en') }}" class="{{ app()->getLocale() === 'en' ? 'active' : '' }}">EN</a>
+        <a href="{{ route('lang.switch', 'ru') }}" class="{{ app()->getLocale() === 'ru' ? 'active' : '' }}">RU</a>
+        <a href="{{ route('lang.switch', 'kz') }}" class="{{ app()->getLocale() === 'kz' ? 'active' : '' }}">KZ</a>
+    </div>
+
+    <h2>{{ __('messages.login') }}</h2>
 
     <form action="/login" method="post">
         @csrf
@@ -99,21 +127,21 @@
         @endif
 
         <div class="form-group">
-            <label>Login</label>
+            <label>{{ __('messages.login') }}</label>
             <input type="text" name="email" required>
         </div>
 
         <div class="form-group">
-            <label>Password</label>
+            <label>{{ __('messages.password') }}</label>
             <input type="password" name="password" required>
         </div>
 
-        <button type="submit">Login</button>
+        <button type="submit">{{ __('messages.login') }}</button>
 
     </form>
 
     <div class="switch">
-        No account? <a href="{{ route('register') }}">Register</a>
+        {{ __('messages.no_account') }} <a href="{{ route('register') }}">{{ __('messages.register') }}</a>
     </div>
 
 </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <title>Registration</title>
+    <title>{{ __('messages.register') }}</title>
 
     <style>
 
@@ -83,6 +83,28 @@
             text-decoration:none;
         }
 
+        .language-switcher{
+            display:flex;
+            justify-content:center;
+            gap:8px;
+            margin-bottom:18px;
+            font-size:13px;
+        }
+
+        .language-switcher a{
+            color:#ff512f;
+            text-decoration:none;
+            border:1px solid #ffd2c8;
+            border-radius:5px;
+            padding:4px 8px;
+        }
+
+        .language-switcher a.active{
+            background:#ff512f;
+            color:white;
+            border-color:#ff512f;
+        }
+
     </style>
 </head>
 
@@ -90,36 +112,42 @@
 
 <div class="container">
 
-    <h2>Create Account</h2>
+    <div class="language-switcher" aria-label="{{ __('messages.choose_language') }}">
+        <a href="{{ route('lang.switch', 'en') }}" class="{{ app()->getLocale() === 'en' ? 'active' : '' }}">EN</a>
+        <a href="{{ route('lang.switch', 'ru') }}" class="{{ app()->getLocale() === 'ru' ? 'active' : '' }}">RU</a>
+        <a href="{{ route('lang.switch', 'kz') }}" class="{{ app()->getLocale() === 'kz' ? 'active' : '' }}">KZ</a>
+    </div>
+
+    <h2>{{ __('messages.create_account') }}</h2>
 
     <form>
 
         <div class="form-group">
-            <label>Login</label>
+            <label>{{ __('messages.login') }}</label>
             <input type="text" required>
         </div>
 
         <div class="form-group">
-            <label>Email</label>
+            <label>{{ __('messages.email') }}</label>
             <input type="email" required>
         </div>
 
         <div class="form-group">
-            <label>Password</label>
+            <label>{{ __('messages.password') }}</label>
             <input type="password" required>
         </div>
 
         <div class="form-group">
-            <label>Confirm password</label>
+            <label>{{ __('messages.confirm_password') }}</label>
             <input type="password" required>
         </div>
 
-        <button type="submit">Register</button>
+        <button type="submit">{{ __('messages.register') }}</button>
 
     </form>
 
     <div class="switch">
-        Already have an account? <a href="login.html">Login</a>
+        {{ __('messages.already_have_account') }} <a href="{{ route('login') }}">{{ __('messages.login') }}</a>
     </div>
 
 </div>

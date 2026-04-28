@@ -52,7 +52,6 @@ class AuthController extends Controller
 
     public function showMain(Request $request)
     {
-        $auth = $request->query('auth');
-        return view('main', ['auth' => $auth]);
+        return view('public.home', ['auth' => $request->query('auth')]);
     }
 }

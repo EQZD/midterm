@@ -1,21 +1,21 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Create User')
+@section('title', __('messages.create_user'))
 @section('role-label', 'Super Admin')
 @php $badgeBg = '#1a1917'; $badgeColor = '#f5f4f0'; @endphp
 
 @section('nav')
-    <span class="nav-section">Overview</span>
+    <span class="nav-section">{{ __('messages.overview') }}</span>
     <a href="{{ route('admin.dashboard') }}" class="nav-link">
-        <span class="nav-icon">◈</span> Dashboard
+        <span class="nav-icon">◈</span> {{ __('messages.dashboard') }}
     </a>
 
-    <span class="nav-section">System</span>
+    <span class="nav-section">{{ __('messages.system') }}</span>
     <a href="{{ route('members.index') }}" class="nav-link active">
-        <span class="nav-icon">⚥</span> Users
+        <span class="nav-icon">⚥</span> {{ __('messages.users') }}
     </a>
     <a href="{{ route('admin.roles.index') }}" class="nav-link">
-        <span class="nav-icon">◐</span> Roles
+        <span class="nav-icon">◐</span> {{ __('messages.roles') }}
     </a>
 @endsection
 
@@ -32,8 +32,8 @@
 
 @section('content')
 <div class="page-header">
-    <h1>Create User</h1>
-    <p>Add a new staff, manager, or admin to the platform.</p>
+    <h1>{{ __('messages.create_user') }}</h1>
+    <p>{{ __('messages.create_user_subtitle') }}</p>
 </div>
 
 <div class="card" style="padding: 30px;">
@@ -50,23 +50,23 @@
     <form method="POST" action="{{ route('admin.users.store') }}">
         @csrf
         <div class="form-group">
-            <label class="form-label">Full Name</label>
+            <label class="form-label">{{ __('messages.full_name') }}</label>
             <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
         </div>
 
         <div class="form-group">
-            <label class="form-label">Email Address</label>
+            <label class="form-label">{{ __('messages.email_address') }}</label>
             <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
         </div>
 
         <div class="form-group">
-            <label class="form-label">Password</label>
+            <label class="form-label">{{ __('messages.password') }}</label>
             <input type="password" name="password" class="form-control" required minlength="6">
-            <div style="font-size:11px;color:var(--muted);margin-top:4px;">Minimum 6 characters.</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:4px;">{{ __('messages.minimum_password') }}</div>
         </div>
 
         <div class="form-group">
-            <label class="form-label">Roles</label>
+            <label class="form-label">{{ __('messages.roles') }}</label>
             <div class="checkbox-group">
                 @foreach($roles as $role)
                     <div class="checkbox-item">
@@ -80,8 +80,8 @@
         </div>
 
         <div style="margin-top:30px;">
-            <button type="submit" class="btn btn-primary">Create User</button>
-            <a href="{{ route('members.index') }}" class="btn" style="margin-left:10px;">Cancel</a>
+            <button type="submit" class="btn btn-primary">{{ __('messages.create_user') }}</button>
+            <a href="{{ route('members.index') }}" class="btn" style="margin-left:10px;">{{ __('messages.cancel') }}</a>
         </div>
     </form>
 </div>

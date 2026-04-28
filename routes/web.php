@@ -2,10 +2,20 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\PublicPageController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
+Route::get('/lang/{lang}', [LanguageController::class, 'switch'])->name('lang.switch');
+Route::get('/about', [PublicPageController::class, 'about'])->name('public.about');
+Route::get('/services', [PublicPageController::class, 'services'])->name('public.services');
+Route::get('/schedule', [PublicPageController::class, 'schedule'])->name('public.schedule');
+Route::get('/pricing', [PublicPageController::class, 'pricing'])->name('public.pricing');
+Route::get('/contact', [PublicPageController::class, 'contact'])->name('public.contact');
+Route::post('/contact', [PublicPageController::class, 'submitContact'])->name('public.contact.submit');
 
 // ── Public (guest) routes ──────────────────────────────────────────────────
 
@@ -32,7 +42,7 @@ Route::middleware(['auth', 'role:super_admin'])->prefix('admin')->name('admin.')
 
 Route::middleware(['auth', 'role:super_admin,manager'])->prefix('manager')->name('manager.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'manager'])->name('dashboard');
-    Route::get('/reports',   fn () => view('manager.reports'))->name('reports');
+    Route::get('/reports',   [DashboardController::class, 'reports'])->name('reports');
 });
 
 // ── Staff ──────────────────────────────────────────────────────────────────
@@ -67,7 +77,7 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
 
 // ── Fallback landing ───────────────────────────────────────────────────────
 
-Route::get('/main', [AuthController::class, 'showMain'])->name('main')->middleware('auth');
+Route::get('/main', [PublicPageController::class, 'home'])->name('main');
 
 // ── File Upload ────────────────────────────────────────────────────────────
 
@@ -85,7 +95,7 @@ Route::middleware(['auth', 'role:super_admin,manager'])->group(function () {
 
 Route::get('/', function () {
     if (!Auth::check()) {
-        return redirect()->route('login');
+        return redirect()->route('main');
     }
 
     $user = Auth::user();

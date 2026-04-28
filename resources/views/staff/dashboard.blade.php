@@ -1,61 +1,61 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Staff Dashboard')
+@section('title', __('messages.staff_dashboard'))
 @section('role-label', 'Staff')
 @php $badgeBg = '#e1f5ee'; $badgeColor = '#04342c'; @endphp
 
 @section('nav')
-    <span class="nav-section">Overview</span>
+    <span class="nav-section">{{ __('messages.overview') }}</span>
     <a href="{{ route('staff.dashboard') }}" class="nav-link active">
-        <span class="nav-icon">◈</span> Dashboard
+        <span class="nav-icon">◈</span> {{ __('messages.dashboard') }}
     </a>
 
-    <span class="nav-section">Members</span>
+    <span class="nav-section">{{ __('messages.members') }}</span>
     <a href="{{ route('members.index') }}" class="nav-link">
-        <span class="nav-icon">◉</span> All Members
+        <span class="nav-icon">◉</span> {{ __('messages.all_members') }}
     </a>
     <a href="{{ route('members.create') }}" class="nav-link">
-        <span class="nav-icon">+</span> Register Member
+        <span class="nav-icon">+</span> {{ __('messages.register_member') }}
     </a>
 @endsection
 
 @section('content')
 <div class="page-header">
-    <h1>Staff Dashboard</h1>
-    <p>Register new members and look up existing ones.</p>
+    <h1>{{ __('messages.staff_dashboard') }}</h1>
+    <p>{{ __('messages.staff_dashboard_subtitle') }}</p>
 </div>
 
 <div class="stats-grid">
     <div class="stat-card">
-        <div class="label">Total Members</div>
+        <div class="label">{{ __('messages.total_members') }}</div>
         <div class="value">{{ $totalMembers ?? 0 }}</div>
-        <div class="delta">in the system</div>
+        <div class="delta">{{ __('messages.in_system') }}</div>
     </div>
     <div class="stat-card">
-        <div class="label">Registered Today</div>
+        <div class="label">{{ __('messages.registered_today') }}</div>
         <div class="value">{{ $todayCount ?? 0 }}</div>
-        <div class="delta">new sign-ups</div>
+        <div class="delta">{{ __('messages.new_signups') }}</div>
     </div>
 </div>
 
 <div class="alert alert-info">
-    As staff, you can <strong>view and register</strong> members. To edit or delete, contact a manager.
+    {{ __('messages.staff_can_register') }}
 </div>
 
 <div class="card">
     <div class="card-header">
-        <h2>Quick Register</h2>
-        <a href="{{ route('members.create') }}" class="btn btn-sm btn-primary">+ New Member</a>
+        <h2>{{ __('messages.quick_register') }}</h2>
+        <a href="{{ route('members.create') }}" class="btn btn-sm btn-primary">+ {{ __('messages.new_member') }}</a>
     </div>
     <table>
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Membership</th>
-                <th>Phone</th>
-                <th>Joined</th>
-                <th>Profile</th>
+                <th>{{ __('messages.name') }}</th>
+                <th>{{ __('messages.email') }}</th>
+                <th>{{ __('messages.membership') }}</th>
+                <th>{{ __('messages.phone') }}</th>
+                <th>{{ __('messages.joined') }}</th>
+                <th>{{ __('messages.profile') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -72,10 +72,10 @@
                 <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px">
                     {{ \Carbon\Carbon::parse($member->join_date)->format('d M Y') }}
                 </td>
-                <td><a href="{{ route('members.show', $member) }}" class="btn btn-sm">View</a></td>
+                <td><a href="{{ route('members.show', $member) }}" class="btn btn-sm">{{ __('messages.view') }}</a></td>
             </tr>
         @empty
-            <tr><td colspan="6" style="color:var(--muted);text-align:center;padding:24px">No members yet. Register the first one!</td></tr>
+            <tr><td colspan="6" style="color:var(--muted);text-align:center;padding:24px">{{ __('messages.no_members_register_first') }}</td></tr>
         @endforelse
         </tbody>
     </table>

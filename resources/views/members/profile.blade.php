@@ -1,20 +1,20 @@
 @extends('layouts.dashboard')
 
-@section('title', 'My Membership')
-@section('role-label', 'Member')
+@section('title', __('messages.my_membership'))
+@section('role-label', __('messages.membership'))
 @php $badgeBg = '#faeeda'; $badgeColor = '#412402'; @endphp
 
 @section('nav')
-    <span class="nav-section">My Account</span>
+    <span class="nav-section">{{ __('messages.my_account') }}</span>
     <a href="{{ route('member.profile') }}" class="nav-link active">
-        <span class="nav-icon">◉</span> My Profile
+        <span class="nav-icon">◉</span> {{ __('messages.my_profile') }}
     </a>
 @endsection
 
 @section('content')
 <div class="page-header">
-    <h1>My Membership</h1>
-    <p>Your current membership details.</p>
+    <h1>{{ __('messages.my_membership') }}</h1>
+    <p>{{ __('messages.current_membership_details') }}</p>
 </div>
 
 @if($member ?? null)
@@ -22,7 +22,7 @@
 {{-- Profile card --}}
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
     <div class="card" style="margin:0">
-        <div class="card-header"><h2>Personal Info</h2></div>
+        <div class="card-header"><h2>{{ __('messages.personal_info') }}</h2></div>
         <div class="card-body">
             <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
                 <div style="width:52px;height:52px;border-radius:50%;background:#1a1917;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:500;color:#f5f4f0;font-family:'DM Mono',monospace">
@@ -35,17 +35,17 @@
             </div>
             <table style="width:100%;font-size:13px">
                 <tr>
-                    <td style="color:var(--muted);padding:6px 0;width:40%">Phone</td>
+                    <td style="color:var(--muted);padding:6px 0;width:40%">{{ __('messages.phone') }}</td>
                     <td style="padding:6px 0">{{ $member->phone ?? '—' }}</td>
                 </tr>
                 <tr>
-                    <td style="color:var(--muted);padding:6px 0">Member since</td>
+                    <td style="color:var(--muted);padding:6px 0">{{ __('messages.member_since') }}</td>
                     <td style="padding:6px 0;font-family:'DM Mono',monospace;font-size:12px">
                         {{ \Carbon\Carbon::parse($member->join_date)->format('d F Y') }}
                     </td>
                 </tr>
                 <tr>
-                    <td style="color:var(--muted);padding:6px 0">Duration</td>
+                    <td style="color:var(--muted);padding:6px 0">{{ __('messages.duration') }}</td>
                     <td style="padding:6px 0">
                         {{ \Carbon\Carbon::parse($member->join_date)->diffForHumans(null, true) }}
                     </td>
@@ -55,7 +55,7 @@
     </div>
 
     <div class="card" style="margin:0">
-        <div class="card-header"><h2>Membership Type</h2></div>
+        <div class="card-header"><h2>{{ __('messages.membership_type') }}</h2></div>
         <div class="card-body">
             @php
                 $type = $member->membership_type;
@@ -76,7 +76,7 @@
             </div>
 
             <div style="border-top:1px solid var(--border);padding-top:14px;margin-top:4px">
-                <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--muted);margin-bottom:8px;font-weight:500">Included</div>
+                <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--muted);margin-bottom:8px;font-weight:500">{{ __('messages.included') }}</div>
                 @if($type === 'Gold')
                     <div style="font-size:13px;line-height:2">✓ All facilities &nbsp; ✓ Priority booking<br>✓ Exclusive events &nbsp; ✓ Guest passes</div>
                 @elseif($type === 'Silver')
@@ -90,10 +90,10 @@
 </div>
 
 <div class="alert alert-warning">
-    To change your membership type or update contact details, please speak to a staff member at reception.
+    {{ __('messages.to_change_membership') }}
 </div>
 
 @else
-    <div class="alert alert-info">No membership profile found linked to your account. Please contact reception.</div>
+    <div class="alert alert-info">{{ __('messages.no_membership_profile') }}</div>
 @endif
 @endsection

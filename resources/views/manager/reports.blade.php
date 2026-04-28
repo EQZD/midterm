@@ -1,30 +1,30 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Reports')
+@section('title', __('messages.reports'))
 @section('role-label', Auth::user()->isSuperAdmin() ? 'Super Admin' : (Auth::user()->isManager() ? 'Manager' : 'Staff'))
 
 @section('nav')
-    <span class="nav-section">Overview</span>
+    <span class="nav-section">{{ __('messages.overview') }}</span>
     @if(Auth::user()->isSuperAdmin())
-        <a href="{{ route('admin.dashboard') }}" class="nav-link"><span class="nav-icon">◈</span> Dashboard</a>
+        <a href="{{ route('admin.dashboard') }}" class="nav-link"><span class="nav-icon">◈</span> {{ __('messages.dashboard') }}</a>
     @elseif(Auth::user()->isManager())
-        <a href="{{ route('manager.dashboard') }}" class="nav-link"><span class="nav-icon">◈</span> Dashboard</a>
+        <a href="{{ route('manager.dashboard') }}" class="nav-link"><span class="nav-icon">◈</span> {{ __('messages.dashboard') }}</a>
     @else
-        <a href="{{ route('staff.dashboard') }}" class="nav-link"><span class="nav-icon">◈</span> Dashboard</a>
+        <a href="{{ route('staff.dashboard') }}" class="nav-link"><span class="nav-icon">◈</span> {{ __('messages.dashboard') }}</a>
     @endif
 
-    <span class="nav-section">Members</span>
-    <a href="{{ route('members.index') }}" class="nav-link"><span class="nav-icon">◉</span> All Members</a>
-    <a href="{{ route('members.create') }}" class="nav-link"><span class="nav-icon">+</span> Add Member</a>
+    <span class="nav-section">{{ __('messages.members') }}</span>
+    <a href="{{ route('members.index') }}" class="nav-link"><span class="nav-icon">◉</span> {{ __('messages.all_members') }}</a>
+    <a href="{{ route('members.create') }}" class="nav-link"><span class="nav-icon">+</span> {{ __('messages.add_member') }}</a>
 
     @if(Auth::user()->isSuperAdmin())
-        <span class="nav-section">System</span>
-        <a href="{{ route('members.index') }}" class="nav-link"><span class="nav-icon">⚥</span> Users</a>
-        <a href="{{ route('admin.roles.index') }}" class="nav-link"><span class="nav-icon">◐</span> Roles</a>
+        <span class="nav-section">{{ __('messages.system') }}</span>
+        <a href="{{ route('members.index') }}" class="nav-link"><span class="nav-icon">⚥</span> {{ __('messages.users') }}</a>
+        <a href="{{ route('admin.roles.index') }}" class="nav-link"><span class="nav-icon">◐</span> {{ __('messages.roles') }}</a>
     @endif
     @if(Auth::user()->isSuperAdmin() || Auth::user()->isManager())
-        <span class="nav-section">Insights</span>
-        <a href="{{ route('manager.reports') }}" class="nav-link active"><span class="nav-icon">▤</span> Reports</a>
+        <span class="nav-section">{{ __('messages.reports') }}</span>
+        <a href="{{ route('manager.reports') }}" class="nav-link active"><span class="nav-icon">▤</span> {{ __('messages.reports') }}</a>
     @endif
 @endsection
 
@@ -47,14 +47,14 @@
 
 @section('content')
 <div class="page-header">
-    <h1>Reports & Insights</h1>
-    <p>Analyze membership distribution and joining trends.</p>
+    <h1>{{ __('messages.reports_insights') }}</h1>
+    <p>{{ __('messages.reports_subtitle') }}</p>
 </div>
 
 <div class="charts-grid">
     <div class="card">
         <div class="card-header">
-            <h2>Membership Types</h2>
+            <h2>{{ __('messages.membership_types') }}</h2>
         </div>
         <div class="chart-container">
             <canvas id="typeChart"></canvas>
@@ -62,7 +62,7 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <h2>Member Status</h2>
+            <h2>{{ __('messages.member_status') }}</h2>
         </div>
         <div class="chart-container">
             <canvas id="statusChart"></canvas>
@@ -72,7 +72,7 @@
 
 <div class="card">
     <div class="card-header">
-        <h2>Recent Join Activity (Last 7 Days)</h2>
+        <h2>{{ __('messages.recent_join_activity') }}</h2>
     </div>
     <div class="chart-container" style="height: 350px;">
         <canvas id="joinsChart"></canvas>
@@ -88,7 +88,7 @@
     new Chart(typeCtx, {
         type: 'doughnut',
         data: {
-            labels: ['Gold', 'Silver', 'Bronze'],
+            labels: ['{{ __('messages.gold') }}', '{{ __('messages.silver') }}', '{{ __('messages.bronze') }}'],
             datasets: [{
                 data: [
                     {{ $membershipData['Gold'] ?? 0 }},
@@ -106,7 +106,7 @@
     new Chart(statusCtx, {
         type: 'pie',
         data: {
-            labels: ['Active', 'Expired', 'Cancelled'],
+            labels: ['{{ __('messages.active') }}', '{{ __('messages.expired') }}', '{{ __('messages.cancelled') }}'],
             datasets: [{
                 data: [
                     {{ $statusData['Active'] ?? 0 }},
@@ -128,9 +128,9 @@
     new Chart(joinsCtx, {
         type: 'bar',
         data: {
-            labels: joinDates.length ? joinDates : ['No Data'],
+            labels: joinDates.length ? joinDates : ['{{ __('messages.no_data') }}'],
             datasets: [{
-                label: 'New Members',
+                label: '{{ __('messages.new_members') }}',
                 data: joinCounts.length ? joinCounts : [0],
                 backgroundColor: '#1a1917',
                 borderRadius: 4

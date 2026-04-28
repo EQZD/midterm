@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -104,6 +104,24 @@
             text-decoration: none;
         }
         .logout-btn:hover { color: var(--text); }
+        .language-switcher {
+            display: flex;
+            gap: 6px;
+            margin-top: 12px;
+        }
+        .language-switcher a {
+            padding: 3px 7px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            font-size: 11px;
+            color: var(--muted);
+            text-decoration: none;
+        }
+        .language-switcher a.active {
+            background: var(--text);
+            border-color: var(--text);
+            color: #fff;
+        }
 
         /* ── Main ── */
         .main {
@@ -265,9 +283,14 @@
     <div class="sidebar-footer">
         <div class="user-name">{{ Auth::user()->name }}</div>
         <div class="user-email">{{ Auth::user()->email }}</div>
+        <div class="language-switcher" aria-label="{{ __('messages.choose_language') }}">
+            <a href="{{ route('lang.switch', 'en') }}" class="{{ app()->getLocale() === 'en' ? 'active' : '' }}">EN</a>
+            <a href="{{ route('lang.switch', 'ru') }}" class="{{ app()->getLocale() === 'ru' ? 'active' : '' }}">RU</a>
+            <a href="{{ route('lang.switch', 'kz') }}" class="{{ app()->getLocale() === 'kz' ? 'active' : '' }}">KZ</a>
+        </div>
         <form method="POST" action="{{ route('logout') }}" style="display:inline">
             @csrf
-            <button type="submit" class="logout-btn">Sign out →</button>
+            <button type="submit" class="logout-btn">{{ __('messages.sign_out') }} -></button>
         </form>
     </div>
 </aside>
