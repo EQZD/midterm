@@ -11,7 +11,7 @@
     </a>
 
     <span class="nav-section">System</span>
-    <a href="{{ route('admin.users.index') }}" class="nav-link active">
+    <a href="{{ route('members.index') }}" class="nav-link active">
         <span class="nav-icon">⚥</span> Users
     </a>
     <a href="{{ route('admin.roles.index') }}" class="nav-link">
@@ -81,7 +81,7 @@
 
         <div style="margin-top:30px;">
             <button type="submit" class="btn btn-primary">Create User</button>
-            <a href="{{ route('admin.users.index') }}" class="btn" style="margin-left:10px;">Cancel</a>
+            <a href="{{ route('members.index') }}" class="btn" style="margin-left:10px;">Cancel</a>
         </div>
     </form>
 </div>

@@ -11,7 +11,7 @@
     </a>
 
     <span class="nav-section">System</span>
-    <a href="{{ route('admin.users.index') }}" class="nav-link active">
+    <a href="{{ route('members.index') }}" class="nav-link active">
         <span class="nav-icon">⚥</span> Users
     </a>
     <a href="{{ route('admin.roles.index') }}" class="nav-link">

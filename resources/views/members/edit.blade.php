@@ -19,7 +19,7 @@
 
     @if(Auth::user()->isSuperAdmin())
         <span class="nav-section">System</span>
-        <a href="{{ route('admin.users.index') }}" class="nav-link"><span class="nav-icon">⚥</span> Users</a>
+        <a href="{{ route('members.index') }}" class="nav-link"><span class="nav-icon">⚥</span> Users</a>
         <a href="{{ route('admin.roles.index') }}" class="nav-link"><span class="nav-icon">◐</span> Roles</a>
     @endif
     @if(Auth::user()->isSuperAdmin() || Auth::user()->isManager())

@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\WelcomeMemberMail;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class MemberController extends Controller
 {
     public function index()
     {
         $user = Auth::user();
-
-        if ($user->isMember() && !$user->isManager() && !$user->isStaff() && !$user->isSuperAdmin()) {
+        if ($user->isMember() && !$user->hasAnyRole(['staff', 'manager', 'super_admin'])) {
             return redirect()->route('member.profile');
         }
-
         $members = Member::latest()->paginate(20);
         return view('members.index', compact('members'));
     }
@@ -33,25 +33,30 @@ class MemberController extends Controller
             'phone'           => 'nullable|string|max:20',
             'membership_type' => 'required|string|max:50',
             'join_date'       => 'required|date',
-            'status'          => 'required|string|in:active,expired,cancelled',
-            'expiry_date'     => 'nullable|date',
         ]);
 
-        Member::create($validated);
+        $member = Member::create($validated);
 
-        return redirect()->route('members.index')->with('success', 'Member registered successfully.');
+        // Отправляем welcome email
+        try {
+            Mail::to($member->email)->send(new WelcomeMemberMail($member));
+        } catch (\Exception $e) {
+            logger()->warning('Could not send welcome email: ' . $e->getMessage());
+        }
+
+        return redirect()->route('members.show', $member)
+                         ->with('success', 'Member registered and welcome email sent!');
     }
 
     public function show(Member $member)
     {
         $user = Auth::user();
-
         if ($user->isMember() && !$user->hasAnyRole(['staff', 'manager', 'super_admin'])) {
             if ($user->email !== $member->email) {
-                abort(403, 'You can only view your own profile.');
+                abort(403);
             }
         }
-
+        $member->load('files');
         return view('members.show', compact('member'));
     }
 
@@ -68,25 +73,20 @@ class MemberController extends Controller
             'phone'           => 'nullable|string|max:20',
             'membership_type' => 'required|string|max:50',
             'join_date'       => 'required|date',
-            'status'          => 'required|string|in:active,expired,cancelled',
-            'expiry_date'     => 'nullable|date',
         ]);
-
         $member->update($validated);
-
-        return redirect()->route('members.show', $member)->with('success', 'Member updated successfully.');
+        return redirect()->route('members.show', $member)->with('success', 'Member updated.');
     }
 
     public function destroy(Member $member)
     {
         $member->delete();
-
         return redirect()->route('members.index')->with('success', 'Member deleted.');
     }
 
     public function profile()
     {
-        $member = Member::where('email', Auth::user()->email)->firstOrFail();
+        $member = Member::where('email', Auth::user()->email)->with('files')->firstOrFail();
         return view('members.profile', compact('member'));
     }
 }
