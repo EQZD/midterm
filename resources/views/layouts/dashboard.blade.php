@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { -webkit-text-size-adjust: 100%; }
 
         :root {
             --bg:       #f5f4f0;
@@ -25,6 +26,12 @@
             color: var(--text);
             min-height: 100vh;
             display: flex;
+            overflow-x: hidden;
+        }
+
+        img, svg, video, canvas {
+            max-width: 100%;
+            height: auto;
         }
 
         /* ── Sidebar ── */
@@ -127,15 +134,16 @@
         .main {
             margin-left: var(--sidebar-w);
             flex: 1;
-            padding: 36px 40px;
-            max-width: 1100px;
+            width: calc(100% - var(--sidebar-w));
+            max-width: 1200px;
+            padding: clamp(20px, 3vw, 40px);
         }
 
         .page-header {
             margin-bottom: 32px;
         }
         .page-header h1 {
-            font-size: 24px;
+            font-size: clamp(22px, 3vw, 32px);
             font-weight: 400;
             letter-spacing: -0.5px;
         }
@@ -185,7 +193,7 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 10px;
-            overflow: hidden;
+            overflow-x: auto;
             margin-bottom: 24px;
         }
         .card-header {
@@ -197,8 +205,9 @@
         }
         .card-header h2 { font-size: 14px; font-weight: 500; }
         .card-body { padding: 20px; }
+        .card-body table { min-width: 0; }
 
-        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        table { width: 100%; min-width: 620px; border-collapse: collapse; font-size: 13px; }
         th {
             text-align: left;
             padding: 8px 12px;
@@ -210,6 +219,7 @@
             border-bottom: 1px solid var(--border);
         }
         td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+        td { overflow-wrap: anywhere; }
         tr:last-child td { border-bottom: none; }
         tr:hover td { background: var(--bg); }
 
@@ -263,6 +273,109 @@
         .alert-info    { background: #e6f1fb; border-color: #378add; color: #042c53; }
         .alert-success { background: #eaf3de; border-color: #639922; color: #173404; }
         .alert-warning { background: #faeeda; border-color: #ba7517; color: #412402; }
+
+        @media (min-width: 1400px) {
+            :root { --sidebar-w: 260px; }
+            .main { max-width: 1600px; }
+            .stats-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            :root { --sidebar-w: 190px; }
+            .main { padding: 28px; }
+            .nav-link { padding-inline: 16px; }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                display: block;
+                overflow-x: hidden;
+            }
+
+            .sidebar {
+                position: static;
+                width: 100%;
+                border-right: 0;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .sidebar-brand,
+            .sidebar-footer {
+                padding: 16px;
+            }
+
+            .sidebar-nav {
+                display: flex;
+                gap: 6px;
+                padding: 10px 12px;
+                overflow-x: auto;
+            }
+
+            .nav-section {
+                display: none;
+            }
+
+            .nav-link {
+                flex: 0 0 auto;
+                border-left: 0;
+                border-bottom: 2px solid transparent;
+                border-radius: 6px;
+                padding: 9px 12px;
+                white-space: nowrap;
+            }
+
+            .nav-link.active {
+                border-left-color: transparent;
+                border-bottom-color: var(--text);
+            }
+
+            .main {
+                width: 100%;
+                max-width: none;
+                margin-left: 0;
+                padding: 20px 16px 28px;
+            }
+
+            .page-header {
+                margin-bottom: 22px;
+            }
+
+            .card-header,
+            .page-header[style],
+            div[style*="display:flex"],
+            div[style*="justify-content:space-between"],
+            div[style*="justify-content: space-between"] {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 12px;
+            }
+
+            div[style*="grid-template-columns:1fr 1fr"] {
+                grid-template-columns: 1fr !important;
+            }
+
+            .card-body {
+                padding: 16px;
+            }
+
+            .btn {
+                min-height: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar-footer .user-email {
+                overflow-wrap: anywhere;
+            }
+
+            table {
+                min-width: 560px;
+            }
+        }
     </style>
     @stack('styles')
 </head>

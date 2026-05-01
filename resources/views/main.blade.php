@@ -9,6 +9,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ __('messages.fitness_club') }}</title>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -19,6 +20,7 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
+            overflow-x: hidden;
         }
 
         .navbar {
@@ -27,12 +29,15 @@
             align-items: center;
             background: #222;
             color: white;
-            padding: 15px 40px;
+            padding: 15px clamp(16px, 4vw, 40px);
+            gap: 20px;
         }
 
         .nav-links {
             display: flex;
             gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
         }
 
         .hero {
@@ -40,9 +45,21 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 50vh;
+            min-height: 50vh;
+            padding: 48px 20px;
             background: linear-gradient(to right, #ff512f, #dd2476);
             color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 6vw, 64px);
+            margin: 0 0 12px;
+        }
+
+        .hero p {
+            font-size: clamp(16px, 2vw, 22px);
+            margin: 0;
         }
 
         .charts {
@@ -50,16 +67,16 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 40px;
-            padding: 40px;
+            padding: clamp(20px, 4vw, 40px);
         }
 
         canvas {
-            width: 350px !important;
-            height: 350px !important;
+            width: min(350px, 90vw) !important;
+            height: min(350px, 90vw) !important;
         }
 
         .ad-box {
-            width: 280px;
+            width: min(280px, calc(100vw - 32px));
             padding: 15px;
             background: gold;
             position: fixed;
@@ -91,6 +108,31 @@
         .language-switcher a.active {
             background: white;
             color: #222;
+        }
+
+        @media (min-width: 1400px) {
+            .charts { max-width: 1600px; margin: 0 auto; }
+            canvas {
+                width: 420px !important;
+                height: 420px !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                width: 100%;
+                gap: 12px;
+            }
+
+            .ad-box {
+                position: static;
+                margin: 0 auto 24px;
+            }
         }
     </style>
 </head>

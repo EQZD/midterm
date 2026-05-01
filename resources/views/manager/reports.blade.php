@@ -42,6 +42,29 @@
         width: 100%;
         padding: 20px;
     }
+
+    @media (min-width: 1400px) {
+        .charts-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .chart-container {
+            height: 360px;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .charts-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .chart-container {
+            height: 260px;
+            padding: 12px;
+        }
+    }
 </style>
 @endpush
 

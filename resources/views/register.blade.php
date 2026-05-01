@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ __('messages.register') }}</title>
 
     <style>
@@ -12,17 +14,19 @@
 
         body{
             margin:0;
-            height:100vh;
+            min-height:100vh;
             display:flex;
             justify-content:center;
             align-items:center;
             background:linear-gradient(135deg,#ff512f,#dd2476);
+            padding:24px 16px;
         }
 
         .container{
             background:white;
-            padding:40px;
-            width:360px;
+            padding:clamp(24px, 6vw, 40px);
+            width:90%;
+            max-width:360px;
             border-radius:12px;
             box-shadow:0 10px 25px rgba(0,0,0,0.2);
         }
@@ -103,6 +107,15 @@
             background:#ff512f;
             color:white;
             border-color:#ff512f;
+        }
+
+        @media (min-width: 1400px) {
+            .container { max-width: 420px; }
+        }
+
+        @media (max-width: 480px) {
+            h2 { font-size: 24px; }
+            button, input { min-height: 44px; }
         }
 
     </style>
